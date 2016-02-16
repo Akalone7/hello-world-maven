@@ -1,3 +1,7 @@
 /target/
-.settings/
-WebContent/META-INF/MANIFEST.MF
+/target-eclipse/
+/.settings/
+/.classpath
+/.gitignore
+/.project
+.springBeans
