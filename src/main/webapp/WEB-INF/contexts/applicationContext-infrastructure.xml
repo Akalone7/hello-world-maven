@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:lang="http://www.springframework.org/schema/lang"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:repository="http://www.springframework.org/schema/data/repository"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
+		http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang-4.1.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
+		http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.8.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+		http://www.springframework.org/schema/data/repository http://www.springframework.org/schema/data/repository/spring-repository-1.11.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd">
+
+	<!-- [ROOT] Spring Context -->
+
+	<context:annotation-config />
+
+	<import resource="applicationContext-security.xml"/>
+<!-- 	<import resource="applicationContext-jmx.xml"/> -->
+
+<context:property-placeholder location="classpath*:etc/hello/api.properties"/>
+
+	<context:annotation-config />
+
+	<mvc:annotation-driven />
+
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" p:paramName="lang" />
+	</mvc:interceptors>
+
+<!-- 	<bean class="org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration" /> -->
+
+	<context:component-scan
+		base-package="it.clefra.web" />
+
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
+
+	<!-- Method validation with JSR303 -->
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" p:validationMessageSource-ref="messageSource" />
+	<bean
+		class="org.springframework.validation.beanvalidation.MethodValidationPostProcessor" />
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+			p:fallbackToSystemLocale="false"
+			p:basename="classpath:locales/messages"
+			p:defaultEncoding="UTF-8"
+			p:cacheSeconds="3" />
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver" p:defaultLocale="it" />
+	<bean id="sessionLocaleResolver"
+		class="org.springframework.web.servlet.i18n.SessionLocaleResolver" p:defaultLocale="it" />
+
+	<bean class="org.springframework.validation.DefaultMessageCodesResolver" />
+	
+	<import resource="applicationContext-web.xml" />
+
+</beans>
