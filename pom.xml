@@ -39,14 +39,14 @@
 										<exclude>commons-logging:*:*:jar:compile</exclude>
 									</excludes>
 								</bannedDependencies>
-								<requirePluginVersions>
-								<message>Best Practice is to always define plugin versions!</message>
-								<banLatest>true</banLatest>
-								<banRelease>true</banRelease>
-								<banSnapshots>true</banSnapshots>
-								<phases>clean,deploy,site</phases>
-								<unCheckedPluginList>org.codehaus.mojo:sonar-maven-plugin,org.apache.maven.plugins:maven-failsafe-plugin</unCheckedPluginList>
-								</requirePluginVersions>
+<!-- 								<requirePluginVersions> -->
+<!-- 								<message>Best Practice is to always define plugin versions!</message> -->
+<!-- 								<banLatest>true</banLatest> -->
+<!-- 								<banRelease>true</banRelease> -->
+<!-- 								<banSnapshots>true</banSnapshots> -->
+<!-- 								<phases>clean,deploy,site</phases> -->
+<!-- 								<unCheckedPluginList>org.codehaus.mojo:sonar-maven-plugin,org.apache.maven.plugins:maven-failsafe-plugin</unCheckedPluginList> -->
+<!-- 								</requirePluginVersions> -->
 							</rules>
 						</configuration>
 					</execution>
