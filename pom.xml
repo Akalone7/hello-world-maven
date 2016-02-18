@@ -106,6 +106,16 @@
 				<artifactId>maven-deploy-plugin</artifactId>
 			</plugin>
 		</plugins>
+		
+		<!-- Resources -->
+		<resources>
+			<resource>
+				<directory>src/main/config/development</directory>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
 	</build>
 
 	<!-- PROFILES -->
@@ -114,8 +124,8 @@
 		<profile>
 			<id>development</id>
 			<properties>
-<!-- 				<config.for.profile>src/main/config/development</config.for.profile> -->
-<!-- 				<filters.for.profile>src/main/filters/development/filter.properties</filters.for.profile> -->
+				<!-- <config.for.profile>src/main/config/development</config.for.profile> -->
+				<!-- <filters.for.profile>src/main/filters/development/filter.properties</filters.for.profile> -->
 			</properties>
 		</profile>
 
@@ -141,7 +151,7 @@
 				<m2eclipse.wtp.contextRoot>/clefra</m2eclipse.wtp.contextRoot>
 			</properties>
 		</profile>
-		
+
 		<!-- PROFILE : TARGET-JETTY -->
 		<profile>
 			<id>target-jetty</id>
@@ -233,6 +243,20 @@
 			<version>${org.springframework.security.version}</version>
 		</dependency>
 
+		<!-- Spring Data MongoDB -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-rest-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-rest-webmvc</artifactId>
+		</dependency>
+
 		<!-- Jackson 2.X -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
@@ -317,6 +341,20 @@
 			<version>4.8.2</version>
 		</dependency>
 	</dependencies>
+
+	<!-- ..:: DEPENDENCY MANAGEMENT ::.. -->
+	<dependencyManagement>
+		<dependencies>
+			<!-- Spring Data BOM -->
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-releasetrain</artifactId>
+				<version>${org.springframework.data.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<!-- ..:: PROPERTIES ::.. -->
 	<properties>
