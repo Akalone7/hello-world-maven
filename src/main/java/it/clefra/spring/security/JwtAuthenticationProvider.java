@@ -12,12 +12,12 @@ import org.springframework.security.authentication.dao.AbstractUserDetailsAuthen
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
+@Service
 public class JwtAuthenticationProvider extends AbstractUserDetailsAuthenticationProvider {
 	
-	@Autowired 
 	private JwtUtil jwtUtil;
 
 	@Override
@@ -40,6 +40,14 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
 		}
 		List<GrantedAuthority> authorityList = AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRole());
 		return new AuthenticatedUser(user.getId(), user.getUsername(), token, authorityList);
+	}
+
+	public JwtUtil getJwtUtil() {
+		return jwtUtil;
+	}
+
+	public void setJwtUtil(JwtUtil jwtUtil) {
+		this.jwtUtil = jwtUtil;
 	}
 
 }

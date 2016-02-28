@@ -1,18 +1,18 @@
 package it.clefra.spring.security;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import it.clefra.spring.security.model.JwtUser;
 
+import org.springframework.stereotype.Service;
+
 @Service
 public class JwtUtil {
 
-    @Value("${jwt.secret}")
+//    @Value("${jwt.secret}")
     private String secret;
 
     /**
@@ -24,12 +24,16 @@ public class JwtUtil {
      */
     public JwtUser parseToken(String token) {
         try {
+        	
+        	String createdJWT = JwtTokenGenerator.createJWT("1", "test", "", "{\"user\": \"clefra\", \"role\": \"USER\"}", 1000000);
+        	
+        	
             Claims body = Jwts.parser()
-                    .setSigningKey(secret)
-                    .parseClaimsJws(token)
+                    .setSigningKey("secret")
+                    .parseClaimsJws(createdJWT)
                     .getBody();
 
-            JwtUser u = new JwtUser(body.getSubject());
+            JwtUser u = new JwtUser((String) body.get("user"));
             u.setId(Long.parseLong((String) body.get("userId")));
             u.setRole((String) body.get("role"));
 
