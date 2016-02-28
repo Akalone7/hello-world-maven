@@ -50,12 +50,12 @@
 	</filter-mapping>
 
 	<!-- Spring Security -->
-<!-- 	<listener> -->
-<!-- 		<display-name> -->
-<!-- 			Notifica gli HttpSession events all'Application Context -->
-<!-- 		</display-name> -->
-<!-- 		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class> -->
-<!-- 	</listener> -->
+	<listener>
+		<display-name>
+			Notifica gli HttpSession events all'Application Context
+		</display-name>
+		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+	</listener>
 
 	<!-- Spring -->
 	<listener>
@@ -87,24 +87,24 @@
 	</servlet-mapping>
 	
 	<!-- Spring Security -->
-<!-- 	<filter> -->
-<!-- 		<filter-name>springSecurityFilterChain</filter-name> -->
-<!-- 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class> -->
-<!-- 		<init-param> -->
-<!-- 			<description>...</description> -->
-<!-- 			<param-name>targetBeanName</param-name> -->
-<!-- 			<param-value>springSecurityFilterChain</param-value> -->
-<!-- 		</init-param> -->
-<!-- 	</filter> -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<description>...</description>
+			<param-name>targetBeanName</param-name>
+			<param-value>springSecurityFilterChain</param-value>
+		</init-param>
+	</filter>
 
 	<!-- Spring Security -->
-<!-- 	<filter-mapping> -->
-<!-- 		<filter-name>springSecurityFilterChain</filter-name> -->
-<!-- 		<url-pattern>/*</url-pattern> -->
-<!-- 		<dispatcher>REQUEST</dispatcher> -->
-<!-- 		<dispatcher>INCLUDE</dispatcher> -->
-<!-- 		<dispatcher>FORWARD</dispatcher> -->
-<!-- 	</filter-mapping> -->
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
 
 	<distributable />
 </web-app>
