@@ -1,6 +1,7 @@
 package it.clefra.spring.security;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -8,6 +9,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import it.clefra.spring.security.model.JwtUser;
 
+@Service
 public class JwtUtil {
 
     @Value("${jwt.secret}")

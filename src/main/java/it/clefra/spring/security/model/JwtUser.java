@@ -4,9 +4,9 @@ import org.springframework.security.core.userdetails.User;
 
 public class JwtUser extends User{
 	private static final long serialVersionUID = -4323498767711763037L;
-	private String username;
-	private Long id;
-	private String role;
+	protected String username;
+	protected Long id;
+	protected String role;
 	
 	public JwtUser(String username){
 		super(username, null, null);
