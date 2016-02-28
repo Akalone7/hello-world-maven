@@ -6,7 +6,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import it.clefra.spring.security.model.User;
+import it.clefra.spring.security.model.JwtUser;
 
 public class JwtUtil {
 
@@ -20,15 +20,14 @@ public class JwtUtil {
      * @param token the JWT token to parse
      * @return the User object extracted from specified token or null if a token is invalid.
      */
-    public User parseToken(String token) {
+    public JwtUser parseToken(String token) {
         try {
             Claims body = Jwts.parser()
                     .setSigningKey(secret)
                     .parseClaimsJws(token)
                     .getBody();
 
-            User u = new User();
-            u.setUsername(body.getSubject());
+            JwtUser u = new JwtUser(body.getSubject());
             u.setId(Long.parseLong((String) body.get("userId")));
             u.setRole((String) body.get("role"));
 
@@ -46,7 +45,7 @@ public class JwtUtil {
      * @param u the user for which the token will be generated
      * @return the JWT token
      */
-    public String generateToken(User u) {
+    public String generateToken(JwtUser u) {
         Claims claims = Jwts.claims().setSubject(u.getUsername());
         claims.put("userId", u.getId() + "");
         claims.put("role", u.getRole());

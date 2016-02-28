@@ -1,9 +1,16 @@
 package it.clefra.spring.security.model;
 
-public class User {
+import org.springframework.security.core.userdetails.User;
+
+public class JwtUser extends User{
+	private static final long serialVersionUID = -4323498767711763037L;
 	private String username;
 	private Long id;
 	private String role;
+	
+	public JwtUser(String username){
+		super(username, null, null);
+	}
 
 	public String getUsername() {
 		return username;
