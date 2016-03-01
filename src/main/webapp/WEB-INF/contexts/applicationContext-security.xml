@@ -41,7 +41,7 @@
 	<security:global-method-security
 		pre-post-annotations="enabled" />
 
-	<security:http pattern="/rest/api/login" security="none" />
+	<security:http pattern="/rest/api/authentication" security="none" />
 	<security:http pattern="/rest/api/signup" security="none" />
 
 	<security:http pattern="/rest/api/**" entry-point-ref="restAuthenticationEntryPoint"
