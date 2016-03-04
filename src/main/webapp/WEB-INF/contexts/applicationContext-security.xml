@@ -18,37 +18,38 @@
 	<!-- <security:global-method-security pre-post-annotations="enabled" /> -->
 
 
-<!-- 	<security:http auto-config="true" use-expressions="true"> -->
-<!-- 		<security:intercept-url pattern="/rest/api/*" -->
-<!-- 			access="isAuthenticated()" /> -->
+	<!-- <security:http auto-config="true" use-expressions="true"> -->
+	<!-- <security:intercept-url pattern="/rest/api/*" -->
+	<!-- access="isAuthenticated()" /> -->
 
-		<!-- <security:intercept-url pattern="/**" access="permitAll" /> -->
+	<!-- <security:intercept-url pattern="/**" access="permitAll" /> -->
 
-		<!-- <security:custom-filter ref="casFilter" position="CAS_FILTER" /> -->
+	<!-- <security:custom-filter ref="casFilter" position="CAS_FILTER" /> -->
 
-		<!-- <security:logout logout-success-url="http://clusterweb.cervedgroup.com/cas/logout?url=http://${cdr.api.security.application.host}:8080/cdr/castest" 
-			/> -->
-		<!-- <security:custom-filter ref="requestSingleLogoutFilter" before="LOGOUT_FILTER" 
-			/> -->
-		<!-- <security:custom-filter ref="singleLogoutFilter" before="CAS_FILTER" 
-			/> -->
+	<!-- <security:logout logout-success-url="http://clusterweb.cervedgroup.com/cas/logout?url=http://${cdr.api.security.application.host}:8080/cdr/castest" 
+		/> -->
+	<!-- <security:custom-filter ref="requestSingleLogoutFilter" before="LOGOUT_FILTER" 
+		/> -->
+	<!-- <security:custom-filter ref="singleLogoutFilter" before="CAS_FILTER" 
+		/> -->
 
-		<!-- FIXME Da riattivare per l'attivazione del CAS -->
-<!-- 		<security:csrf disabled="true" /> -->
-<!-- 	</security:http> -->
+	<!-- FIXME Da riattivare per l'attivazione del CAS -->
+	<!-- <security:csrf disabled="true" /> -->
+	<!-- </security:http> -->
 
 	<!-- START JWT -->
 	<security:global-method-security
 		pre-post-annotations="enabled" />
 
-	<security:http pattern="/rest/api/authentication" security="none" />
+	<security:http pattern="/rest/api/authentication"
+		security="none" />
 	<security:http pattern="/rest/api/signup" security="none" />
 
-	<security:http pattern="/rest/api/**" entry-point-ref="restAuthenticationEntryPoint"
+	<security:http pattern="/rest/api/**" entry-point-ref="restAuthenticationEntryPoint" 
 		create-session="stateless">
-		<security:csrf disabled="true" />
+		<security:csrf disabled="true" request-matcher-ref="GET"/>
 		<security:custom-filter before="FORM_LOGIN_FILTER"
-			ref="jwtAuthenticationFilter" />
+			ref="jwtAuthenticationFilter"  />
 	</security:http>
 
 	<bean id="jwtAuthenticationFilter" class="it.clefra.spring.security.JwtAuthenticationFilter">
@@ -66,9 +67,8 @@
 	<bean id="jwtAuthenticationSuccessHandler"
 		class="it.clefra.spring.security.JwtAuthenticationSuccessHandler">
 	</bean>
-	
-	<bean id="restAuthenticationEntryPoint"
-		class="it.clefra.spring.security.RestAuthenticationEntryPoint">
+
+	<bean id="restAuthenticationEntryPoint" class="it.clefra.spring.security.RestAuthenticationEntryPoint">
 	</bean>
 
 	<security:authentication-manager alias="authenticationManager">

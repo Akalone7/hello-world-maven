@@ -18,10 +18,10 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 	public JwtAuthenticationFilter() {
         super("/**");
     }
-
+	
     @Override
     protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        return true;
+        return !"OPTIONS".equals(request.getMethod());
     }
 
     @Override

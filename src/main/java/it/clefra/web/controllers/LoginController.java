@@ -43,7 +43,7 @@ public class LoginController {
 		try{
 			credentialsModel = credentialsRepository.findByUsernameAndPassword(credentialDto.getUsername(), credentialDto.getPassword());
 			if(credentialsModel != null) {
-				String token = JwtTokenGenerator.createJWT("1", "test", "", "{\"user\": \""+credentialsModel.getUsername()+"\", \"role\": \"USER\"}", 1000000);
+				String token = JwtTokenGenerator.createJWT("1", "test", "", "{\"user\": \"" + credentialsModel.getUsername() + "\", \"password\" : \"" + credentialsModel.getUsername() + "\", \"role\": \"USER\"}", 1000000);
 				output.setJwt(token);
 			}
 		} catch (final Exception e){

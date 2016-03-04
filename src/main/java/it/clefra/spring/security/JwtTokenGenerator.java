@@ -1,5 +1,6 @@
 package it.clefra.spring.security;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -30,7 +31,7 @@ public abstract class JwtTokenGenerator{
 		JwtBuilder builder = Jwts.builder().setId(id)
 				.setPayload(payload)
 				.signWith(signatureAlgorithm, signingKey);
-
+		
 		//if it has been specified, let's add the expiration
 		if (ttlMillis >= 0) {
 			long expMillis = nowMillis + ttlMillis;

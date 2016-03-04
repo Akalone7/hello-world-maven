@@ -1,5 +1,5 @@
 package it.clefra.spring.security.model;
-import java.util.List;
+import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -7,12 +7,12 @@ public class AuthenticatedUser extends JwtUser {
 
 	private static final long serialVersionUID = -3756565843998775274L;
 	
-	private List<GrantedAuthority> authorities;
+	private Collection<GrantedAuthority> authorities;
 
 	private String token;
 
-	public AuthenticatedUser(Long id, String username, String token, List<GrantedAuthority> authorities) {
-		super(username);
+	public AuthenticatedUser(Long id, String username, String token, Collection<GrantedAuthority> authorities) {
+		super(username, "", authorities);
 		super.setId(id);
 		this.token = token;
 		this.authorities = authorities;
@@ -24,12 +24,12 @@ public class AuthenticatedUser extends JwtUser {
 	public void setToken(String token) {
 		this.token = token;
 	}
-	public List<GrantedAuthority> getAuthorities() {
+	public Collection<GrantedAuthority> getAuthorities() {
 		return authorities;
 	}
 
 
-	public void setAuthorities(List<GrantedAuthority> authorities) {
+	public void setAuthorities(Collection<GrantedAuthority> authorities) {
 		this.authorities = authorities;
 	}
 	

@@ -1,13 +1,16 @@
 package it.clefra.spring.security;
 
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.stereotype.Service;
+
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import it.clefra.spring.security.model.JwtUser;
-
-import org.springframework.stereotype.Service;
 
 @Service
 public class JwtUtil {
@@ -25,16 +28,20 @@ public class JwtUtil {
     public JwtUser parseToken(String token) {
         try {
         	
-        	String createdJWT = JwtTokenGenerator.createJWT("1", "test", "", "{\"user\": \"clefra\", \"role\": \"USER\"}", 1000000);
+        	
+//        	String createdJWT = JwtTokenGenerator.createJWT("1", "test", "", "{\"user\": \"clefra\", \"password\" : \"admin\", \"userId\" : \"1\", \"role\": \"USER\"}", 1000000);
         	
         	
             Claims body = Jwts.parser()
                     .setSigningKey("secret")
-                    .parseClaimsJws(createdJWT)
+                    .parseClaimsJws(token)
                     .getBody();
+            
+    		List<GrantedAuthority> authorityList = AuthorityUtils.commaSeparatedStringToAuthorityList(body.get("role").toString());
 
-            JwtUser u = new JwtUser((String) body.get("user"));
-            u.setId(Long.parseLong((String) body.get("userId")));
+            JwtUser u = new JwtUser((String) body.get("user"), (String) body.get("password"), authorityList);
+//            u.setId(Long.parseLong((String) body.get("userId")));
+            u.setId(1L);
             u.setRole((String) body.get("role"));
 
             return u;

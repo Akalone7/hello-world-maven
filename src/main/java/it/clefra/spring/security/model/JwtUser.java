@@ -1,23 +1,17 @@
 package it.clefra.spring.security.model;
 
+import java.util.Collection;
+
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 public class JwtUser extends User{
 	private static final long serialVersionUID = -4323498767711763037L;
-	protected String username;
 	protected Long id;
 	protected String role;
 	
-	public JwtUser(String username){
-		super(username, null, null);
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
+	public JwtUser(String username, String password, Collection<GrantedAuthority> authorityList){
+		super(username, password, authorityList);
 	}
 
 	public Long getId() {
