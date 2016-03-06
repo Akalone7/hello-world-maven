@@ -1,5 +1,7 @@
 package it.clefra.spring.security;
 
+import static org.springframework.http.HttpMethod.OPTIONS;
+
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
@@ -7,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
@@ -14,6 +17,11 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import it.clefra.spring.security.model.JwtAuthenticationToken;
 
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+	
+	public static final String AUTHORIZATION_HEADER_NAME = "Authorization";
+	public static final String JWT_HEADER_PREFIX = "Bearer";
+	public static final Integer JWT_HEADER_LENGTH = 7;
+	
 
 	public JwtAuthenticationFilter() {
         super("/**");
@@ -21,19 +29,19 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 	
     @Override
     protected boolean requiresAuthentication(HttpServletRequest request, HttpServletResponse response) {
-        return !"OPTIONS".equals(request.getMethod());
+        return isProtected(request);
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
-        String header = request.getHeader("Authorization");
+        String header = request.getHeader(AUTHORIZATION_HEADER_NAME);
 
-        if (header == null || !header.startsWith("Bearer ")) {
+        if (header == null || !header.startsWith(JWT_HEADER_PREFIX)) {
             throw new InvalidJwtAuthenticationException("No JWT token found in request headers"); //TODO Custom Exception.
         }
 
-        String authToken = header.substring(7);
+        String authToken = header.substring(JWT_HEADER_LENGTH);
         
 
         JwtAuthenticationToken authRequest = new JwtAuthenticationToken(authToken);
@@ -49,5 +57,19 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
         // As this authentication is in HTTP header, after success we need to continue the request normally
         // and return the response as if the resource was not secured at all
         chain.doFilter(request, response);
+    }
+    
+    private Boolean isProtected(HttpServletRequest request){
+    	Boolean out = true;
+    	
+    	if(request != null){
+    		HttpMethod requestMethod =  HttpMethod.valueOf(request.getMethod());
+    		
+    		if(OPTIONS.equals(requestMethod)){
+    			out = false;
+    		}
+    	}
+    	
+    	return out;
     }
 }
