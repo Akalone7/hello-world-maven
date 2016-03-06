@@ -12,4 +12,7 @@ public interface CredentialsRepository extends MongoRepository<CredentialsModel,
  
 	@Query("{username : ?0, password : ?1}")
 	public CredentialsModel findByUsernameAndPassword(String username, String password);
+	
+	@Query("{username : ?0}")
+	public CredentialsModel findByUsername(String username);
 }
