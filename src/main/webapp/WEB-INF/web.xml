@@ -107,4 +107,30 @@
 	</filter-mapping>
 
 	<distributable />
+	
+	<!-- Embedded Jetty Cors -->
+	<filter>
+   <filter-name>cross-origin</filter-name>
+   <filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
+   <init-param>
+       <param-name>allowedOrigins</param-name>
+       <param-value>*</param-value>
+   </init-param>
+   <init-param>
+       <param-name>allowedTimingOrigins</param-name>
+       <param-value>*</param-value>
+   </init-param>
+   <init-param>
+       <param-name>allowedMethods</param-name>
+       <param-value>PUT, GET, POST, OPTIONS</param-value>
+   </init-param>
+   <init-param>
+       <param-name>allowedHeaders</param-name>
+       <param-value>*</param-value>
+   </init-param>
+ </filter>
+ <filter-mapping>
+     <filter-name>cross-origin</filter-name>
+     <url-pattern>/*</url-pattern>
+ </filter-mapping>
 </web-app>

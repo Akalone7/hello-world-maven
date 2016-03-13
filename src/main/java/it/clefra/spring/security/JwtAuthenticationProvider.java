@@ -4,6 +4,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import it.clefra.spring.security.model.AuthenticatedUser;
@@ -31,7 +32,7 @@ public class JwtAuthenticationProvider extends AbstractUserDetailsAuthentication
 		String token = jwtAuthenticationToken.getToken();
 		JwtUser user = jwtUtil.parseToken(token);
 		if(user == null) {
-			//TODO lanciare eccenzione
+			throw new UsernameNotFoundException("Username not found");
 		}
 		return new AuthenticatedUser(user.getId(), user.getUsername(), token, user.getAuthorities());
 	}
