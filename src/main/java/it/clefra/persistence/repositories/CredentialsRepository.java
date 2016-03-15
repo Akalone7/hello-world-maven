@@ -3,8 +3,6 @@ package it.clefra.persistence.repositories;
 import it.clefra.persistence.model.CredentialsModel;
 
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.annotation.QueryAnnotation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
