@@ -243,6 +243,13 @@
 			<version>${org.springframework.security.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.security.oauth</groupId>
+			<artifactId>spring-security-oauth2</artifactId>
+			<version>2.0.9.RELEASE</version>
+		</dependency>
+
+
 		<!-- Spring Data MongoDB -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
@@ -259,6 +266,14 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
+		</dependency>
+
+		<!-- Javax Persistence -->
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0.2</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- Jackson 2.X -->

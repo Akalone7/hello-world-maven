@@ -14,6 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
+import it.clefra.spring.security.model.AuthenticatedUser;
+import it.clefra.spring.security.model.ClefraHttpServletRequestWrapper;
 import it.clefra.spring.security.model.JwtAuthenticationToken;
 
 public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
@@ -56,7 +58,14 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
 
         // As this authentication is in HTTP header, after success we need to continue the request normally
         // and return the response as if the resource was not secured at all
-        chain.doFilter(request, response);
+        
+        if(AuthenticatedUser.class.isAssignableFrom(authResult.getPrincipal().getClass())){
+        	AuthenticatedUser user = AuthenticatedUser.class.cast(authResult.getPrincipal());
+        	ClefraHttpServletRequestWrapper requestWrapper = new ClefraHttpServletRequestWrapper(request, user.getUsername());
+        	chain.doFilter(requestWrapper, response);
+		} else {
+			chain.doFilter(request, response);
+		}
     }
     
     private Boolean isProtected(HttpServletRequest request){
