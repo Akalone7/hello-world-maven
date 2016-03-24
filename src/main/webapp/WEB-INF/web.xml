@@ -51,9 +51,7 @@
 
 	<!-- Spring Security -->
 	<listener>
-		<display-name>
-			Notifica gli HttpSession events all'Application Context
-		</display-name>
+		<display-name>Notifica gli HttpSession events all'Application Context</display-name>
 		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
 	</listener>
 
@@ -62,7 +60,7 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
- 	<!-- Spring -->
+	<!-- Spring -->
 	<servlet>
 		<servlet-name>spring-mvc-dispatcher.backoffice</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -85,7 +83,7 @@
 		<servlet-name>spring-mvc-dispatcher.backoffice</servlet-name>
 		<url-pattern>/rest/api/*</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- Spring Security -->
 	<filter>
 		<filter-name>springSecurityFilterChain</filter-name>
@@ -107,40 +105,39 @@
 	</filter-mapping>
 
 	<distributable />
-	
+
 	<!-- Embedded Jetty Cors -->
 	<filter>
-   <filter-name>cross-origin</filter-name>
-   <filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
-   <init-param>
-       <param-name>allowedOrigins</param-name>
-       <param-value>*</param-value>
-   </init-param>
-   <init-param>
-       <param-name>allowedTimingOrigins</param-name>
-       <param-value>*</param-value>
-   </init-param>
-   <init-param>
-       <param-name>allowedMethods</param-name>
-       <param-value>PUT, GET, POST, OPTIONS</param-value>
-   </init-param>
-   <init-param>
-       <param-name>allowedHeaders</param-name>
-       <param-value>*</param-value>
-   </init-param>
- </filter>
- <filter-mapping>
-     <filter-name>cross-origin</filter-name>
-     <url-pattern>/*</url-pattern>
- </filter-mapping>
- 
- <filter>
- <filter-name>userHeaderJwtFilter</filter-name>
- <filter-class>it.clefra.spring.security.UserHeaderJwtFilter</filter-class>
-</filter>
-<!-- map the filter to a URL pattern -->
-<filter-mapping>
- <filter-name>userHeaderJwtFilter</filter-name>
- <url-pattern>/*</url-pattern>
-</filter-mapping>
+		<filter-name>cross-origin</filter-name>
+		<filter-class>org.eclipse.jetty.servlets.CrossOriginFilter</filter-class>
+		<init-param>
+			<param-name>allowedOrigins</param-name>
+			<param-value>*</param-value>
+		</init-param>
+		<init-param>
+			<param-name>allowedTimingOrigins</param-name>
+			<param-value>*</param-value>
+		</init-param>
+		<init-param>
+			<param-name>allowedMethods</param-name>
+			<param-value>PUT, GET, POST, OPTIONS</param-value>
+		</init-param>
+		<init-param>
+			<param-name>allowedHeaders</param-name>
+			<param-value>X-Requested-With, Content-Type, Accept, Origin, Authorization, UserId, Access-Control-Allow-Origin</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>cross-origin</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>userHeaderJwtFilter</filter-name>
+		<filter-class>it.clefra.spring.security.UserHeaderJwtFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>userHeaderJwtFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 </web-app>
