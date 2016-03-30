@@ -1,5 +1,7 @@
 package it.clefra.spring.security;
 
+import static it.clefra.spring.security.model.ClefraHttpServletRequestWrapper.AUTHORIZATION_HEADER_NAME;
+
 import java.io.IOException;
 
 import javax.servlet.Filter;
@@ -32,7 +34,7 @@ public class UserHeaderJwtFilter implements Filter {
 			SecurityContextHolderAwareRequestWrapper unwrappedRequest = (SecurityContextHolderAwareRequestWrapper) request;
 			if(unwrappedRequest.getRequest() instanceof ClefraHttpServletRequestWrapper){
 				ClefraHttpServletRequestWrapper req = (ClefraHttpServletRequestWrapper) unwrappedRequest.getRequest();
-				req.addHeader("UserId", "admin");
+				req.addHeader(AUTHORIZATION_HEADER_NAME, req.getUserId());
 				chain.doFilter(req, response);
 			} else {
 				chain.doFilter(request, response);

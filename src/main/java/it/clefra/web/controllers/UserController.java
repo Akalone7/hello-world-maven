@@ -38,10 +38,7 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<UserDetailDto> get(@RequestHeader(USERID_HEADER_NAME) String username) {
 		LOGGER.debug("Start getting user");
-		//determino l'user a partire dal jwt
-//		if (authorizationHeader == null || !authorizationHeader.startsWith(JWT_HEADER_PREFIX)) {
-//			throw new InvalidJwtAuthenticationException("No JWT token found in request headers"); //TODO Custom Exception.
-//		}
+
 		UserDetailDto userDetailDto = new UserDetailDto();
 		UserModel userModel = usersRepository.findByUsername(username);
 	    userDetailDto = UserDetailDto.from(userModel);

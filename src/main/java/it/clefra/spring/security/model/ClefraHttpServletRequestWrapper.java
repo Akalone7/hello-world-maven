@@ -84,4 +84,8 @@ public class ClefraHttpServletRequestWrapper extends HttpServletRequestWrapper{
 		return Collections.enumeration(list);
 	}
 
+	public String getUserId() {
+		return userId;
+	}
+
 }
