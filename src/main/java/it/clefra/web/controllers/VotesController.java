@@ -29,8 +29,8 @@ import it.clefra.web.dto.UserDetailDto;
 @RepositoryRestController @RequestMapping (VotesController.API_ROOT_URI)	
 public class VotesController {
 
-	public static final String API_ROOT_URI = "/votes";
 	private static final Logger LOGGER = LoggerFactory.getLogger(VotesController.class);
+	public static final String API_ROOT_URI = "/votes";
 	public static final String USERID_HEADER_NAME = "UserId";
 	public static final String JWT_HEADER_PREFIX = "Bearer";
 	public static final Integer JWT_HEADER_LENGTH = 7;
