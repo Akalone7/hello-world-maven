@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.Query;
 
@@ -18,9 +17,16 @@ public class MatchesCustomRepositoryBean implements MatchesCustomRepository{
 	private MongoTemplate mongoTemplate;
 
 	@Override
-	public List<MatchModel> getNMatch(Integer limit, String team) {
+	public List<MatchModel> getNMatchByTeam(String team, Integer limit) {
 		CriteriaDefinition criteriaDefinition;
 		Query query = query(where("home").is(team).orOperator(where("away").is(team))).limit(limit);
+		return mongoTemplate.find(query, MatchModel.class);
+	}
+	
+	@Override
+	public List<MatchModel> getAllMatchByTeam(String team) {
+		CriteriaDefinition criteriaDefinition;
+		Query query = query(where("home").is(team).orOperator(where("away").is(team)));
 		return mongoTemplate.find(query, MatchModel.class);
 	}
 

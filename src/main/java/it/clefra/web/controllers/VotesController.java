@@ -50,8 +50,9 @@ public class VotesController {
 
 		try{
 			URL url = new URL("http://www.gazzetta.it/calcio/fantanews/voti/serie-a-2015-16/");
-			Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.cervedgroup.com", 8080)); // or whatever your proxy is
-			HttpURLConnection uc = (HttpURLConnection)url.openConnection(proxy);
+			//Proxy proxy = new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.cervedgroup.com", 8080)); // or whatever your proxy is
+			//HttpURLConnection uc = (HttpURLConnection)url.openConnection(proxy);
+			HttpURLConnection uc = (HttpURLConnection)url.openConnection();
 
 			uc.connect();
 

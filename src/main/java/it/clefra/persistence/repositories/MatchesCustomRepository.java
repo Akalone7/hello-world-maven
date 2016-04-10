@@ -6,5 +6,10 @@ import java.util.List;
 
 public interface MatchesCustomRepository {
    
-    public List<MatchModel> getNMatch(Integer limit, String team);
+    public List<MatchModel> getNMatchByTeam(String team, Integer limit);
+    
+    public List<MatchModel> getAllMatchByTeam(String team);
+    
+    public List<MatchModel> getNMatch(String awa);
+    
 }
