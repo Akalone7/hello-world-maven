@@ -20,7 +20,7 @@ public class MatchModel {
 	private ObjectId id;
 	
 	@Field
-	private String home;	
+	private LineUpModel home;	
 	
 	@Field
 	private Integer homeGoals;
@@ -29,7 +29,7 @@ public class MatchModel {
 	private String away;
 	
 	@Field
-	private String awayGoals;
+	private LineUpModel awayGoals;
 	
 	@Field
 	private LocalDate matchDate;
@@ -40,10 +40,10 @@ public class MatchModel {
 	public void setId(ObjectId id) {
 		this.id = id;
 	}
-	public String getHome() {
+	public LineUpModel getHome() {
 		return home;
 	}
-	public void setHome(String home) {
+	public void setHome(LineUpModel home) {
 		this.home = home;
 	}
 	public Integer getHomeGoals() {
@@ -58,10 +58,10 @@ public class MatchModel {
 	public void setAway(String away) {
 		this.away = away;
 	}
-	public String getAwayGoals() {
+	public LineUpModel getAwayGoals() {
 		return awayGoals;
 	}
-	public void setAwayGoals(String awayGoals) {
+	public void setAwayGoals(LineUpModel awayGoals) {
 		this.awayGoals = awayGoals;
 	}
 	public LocalDate getMatchDate() {

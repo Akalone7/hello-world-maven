@@ -25,6 +25,9 @@ public class PlayerModel {
 	
 	@Field
 	private RoleType roleType;
+	
+	@Field
+	private Integer voto;
 
 	public ObjectId getId() {
 		return id;
@@ -56,5 +59,13 @@ public class PlayerModel {
 
 	public void setRoleType(RoleType roleType) {
 		this.roleType = roleType;
+	}
+
+	public Integer getVoto() {
+		return voto;
+	}
+
+	public void setVoto(Integer voto) {
+		this.voto = voto;
 	}
 }
