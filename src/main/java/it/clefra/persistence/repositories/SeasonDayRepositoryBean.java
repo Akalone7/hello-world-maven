@@ -27,8 +27,10 @@ public class SeasonDayRepositoryBean implements SeasonDayCustomRepository{
 	@Autowired
 	private MongoTemplate mongoTemplate;
 
-	@Override
-	public List<SeasonDayModel> getLastNSeasonDaysByTeam(String team, Integer limit) {
+	/**
+	 * @return la lista delle ultime n giornate giocate dalla squadra
+	 */
+	public List<SeasonDayModel> findLastNSeasonDaysByTeam(String team, Integer limit) {
 		//pipeline
 		Criteria criteria = new Criteria();
 		UnwindOperation unwind = unwind("matches");
@@ -46,8 +48,6 @@ public class SeasonDayRepositoryBean implements SeasonDayCustomRepository{
 		return aggregate.getMappedResults();
 	}
 	
-
-
 //	@Override
 //	public List<SeasonDayModel> getLyTeam(String team, Integer limit) {
 //		CriteriaDefinition criteriaDefinition;

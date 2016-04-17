@@ -6,10 +6,6 @@ import java.util.List;
 
 public interface SeasonDayCustomRepository {
    
-    public List<SeasonDayModel> getLastNSeasonDaysByTeam(String team, Integer limit);
-    
-    //public List<SeasonDayModel> getAllMatchByTeam(String team);
-    
-   // public List<SeasonDayModel> getNMatch(String awa);
+    public List<SeasonDayModel> findLastNSeasonDaysByTeam(String team, Integer limit);
     
 }

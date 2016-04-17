@@ -26,10 +26,10 @@ public class MatchModel {
 	private Integer homeGoals;
 	
 	@Field
-	private String away;
+	private LineUpModel away;
 	
 	@Field
-	private LineUpModel awayGoals;
+	private Integer awayGoals;
 	
 	@Field
 	private LocalDate matchDate;
@@ -52,16 +52,16 @@ public class MatchModel {
 	public void setHomeGoals(Integer homeGoals) {
 		this.homeGoals = homeGoals;
 	}
-	public String getAway() {
+	public LineUpModel getAway() {
 		return away;
 	}
-	public void setAway(String away) {
+	public void setAway(LineUpModel away) {
 		this.away = away;
 	}
-	public LineUpModel getAwayGoals() {
+	public Integer getAwayGoals() {
 		return awayGoals;
 	}
-	public void setAwayGoals(LineUpModel awayGoals) {
+	public void setAwayGoals(Integer awayGoals) {
 		this.awayGoals = awayGoals;
 	}
 	public LocalDate getMatchDate() {

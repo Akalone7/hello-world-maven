@@ -19,10 +19,10 @@ public class LineUpModel {
  private String teamName;
  
  @Field
- List<PlayerModel> lineUp;
+ private List<PlayerModel> lineUp;
  
  @Field
- List<PlayerModel> bleachers;
+ private List<PlayerModel> bleachers;
 
 public ObjectId getId() {
 	return id;

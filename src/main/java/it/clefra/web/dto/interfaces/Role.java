@@ -5,5 +5,4 @@ public interface Role {
 	public boolean isDefender();
 	public boolean isMidfielder();
 	public boolean isForward();
-
 }

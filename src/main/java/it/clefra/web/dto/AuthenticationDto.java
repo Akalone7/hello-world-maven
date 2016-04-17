@@ -1,6 +1,7 @@
 package it.clefra.web.dto;
 
 public class AuthenticationDto {
+	
 	private String jwt;
 
 	public String getJwt() {
