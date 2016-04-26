@@ -43,7 +43,7 @@
 
 	<security:http pattern="/rest/api/authentication"
 		security="none" />
-	<security:http pattern="/rest/api/signup" security="none" />
+	<security:http pattern="/rest/api/signup/**" security="none" />
 
 	<security:http pattern="/rest/api/**" entry-point-ref="restAuthenticationEntryPoint" 
 		create-session="stateless">

@@ -1,5 +1,6 @@
 package it.clefra.persistence.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -12,7 +13,9 @@ import org.springframework.data.mongodb.core.mapping.Field;
  *
  */
 @Document( collection = UserModel.COLLECTION_NAME )
-public class UserModel {
+public class UserModel implements Serializable{
+	private static final long serialVersionUID = 2033888930756342761L;
+
 	public static final String COLLECTION_NAME = "users";
 	
 	@Field
