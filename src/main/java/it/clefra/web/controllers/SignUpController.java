@@ -1,5 +1,7 @@
 package it.clefra.web.controllers;
 
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import it.clefra.persistence.model.CredentialsModel;
 import it.clefra.persistence.model.UserModel;
 import it.clefra.persistence.repositories.CredentialsRepository;
 import it.clefra.persistence.repositories.UsersRepository;
+import it.clefra.service.interfaces.SignUpService;
 import it.clefra.web.dto.CredentialsDto;
 import it.clefra.web.dto.UserDetailDto;
 
@@ -28,7 +31,7 @@ public class SignUpController {
     private UsersRepository usersRepository;
 	
 	@Autowired
-	private CredentialsRepository credentialRepository;
+    private SignUpService signUpService;
 	
 	@RequestMapping(value="/checkUsername/{username}", method = RequestMethod.GET)
 	public ResponseEntity<Boolean> get(@PathVariable String username) {
@@ -41,22 +44,17 @@ public class SignUpController {
 	}
 	
 	/*	TODO
-	 *	Creare servizio per racchiudere le due repository.
-	 *	Servizio di mappatura per le credenziali (To e From).
 	 *	Gestire rollback manuale nel caso in cui uno dei due salvataggi dovesse fallire.
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<UserDetailDto> insert(@RequestBody SignUpDataRequest signUpDataRequest) {
 		LOGGER.debug("Start saving user");
-		UserModel savedUserModel = null;
-		CredentialsModel credentialModel = new CredentialsModel();
-		if(signUpDataRequest != null) {
-			savedUserModel = usersRepository.insert(UserDetailDto.toUserModel(signUpDataRequest.getUserDetails()));
-			credentialModel.setUsername(signUpDataRequest.getCredentials().getUsername());
-			credentialModel.setPassword(signUpDataRequest.getCredentials().getPassword());
-			credentialRepository.insert(credentialModel);
+		UserDetailDto userDetailDto = null;
+		Optional<UserDetailDto> optional = signUpService.register(signUpDataRequest);
+		if(optional.isPresent()) {
+			userDetailDto = optional.get();
 		}
-		ResponseEntity<UserDetailDto> response = new  ResponseEntity<>(UserDetailDto.from(savedUserModel), HttpStatus.OK);
+		ResponseEntity<UserDetailDto> response = new  ResponseEntity<>(userDetailDto, HttpStatus.OK);
 		LOGGER.debug("Request computed. Returning response to Client");
 		return response;
 	}
