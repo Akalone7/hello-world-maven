@@ -9,7 +9,7 @@ public class SeasonDayDto {
 
 	private Integer seasonDay;
 	private List<MatchDto> matches;
-	
+
 	public static SeasonDayDto from(SeasonDayModel seasonDayModel) {
 		SeasonDayDto seasonDayDto = new SeasonDayDto();
 		if(seasonDayModel != null) {
@@ -18,15 +18,17 @@ public class SeasonDayDto {
 		}
 		return seasonDayDto;
 	}
-	
+
 	public static List<SeasonDayDto> from(List<SeasonDayModel> seasonDayModels) {
 		List<SeasonDayDto> seasonDayDtos = new ArrayList<SeasonDayDto>();
-		for(SeasonDayModel seasonDayModel : seasonDayModels) {
-			seasonDayDtos.add(from(seasonDayModel));
+		if(seasonDayModels != null) {
+			for(SeasonDayModel seasonDayModel : seasonDayModels) {
+				seasonDayDtos.add(from(seasonDayModel));
+			}
 		}
 		return seasonDayDtos;
 	}
-	
+
 	public Integer getSeasonDay() {
 		return seasonDay;
 	}
@@ -39,5 +41,5 @@ public class SeasonDayDto {
 	public void setMatches(List<MatchDto> matches) {
 		this.matches = matches;
 	}
-	
+
 }

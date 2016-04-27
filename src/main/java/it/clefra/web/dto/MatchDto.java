@@ -1,5 +1,5 @@
 package it.clefra.web.dto;
-			
+
 import it.clefra.persistence.model.MatchModel;
 import it.clefra.persistence.model.SeasonDayModel;
 
@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MatchDto {
-	
+
 	private LineUpDto home;	
 	private Integer homeGoals;
 	private LineUpDto away;
 	private Integer awayGoals;
 	private LocalDate matchDate;
-	
+
 	public static MatchDto from(MatchModel matchModel) {
 		MatchDto matchDto = new MatchDto();
 		if(matchModel != null) {
@@ -26,15 +26,17 @@ public class MatchDto {
 		}
 		return matchDto;
 	}
-	
+
 	public static List<MatchDto> from(List<MatchModel> matchModels) {
 		List<MatchDto> matchDtos = new ArrayList<MatchDto>();
-		for(MatchModel matchModel : matchModels) {
-		   matchDtos.add(MatchDto.from(matchModel));
+		if(matchModels != null) {
+			for(MatchModel matchModel : matchModels) {
+				matchDtos.add(MatchDto.from(matchModel));
+			}
 		}
 		return matchDtos;
 	}
-	
+
 	public LineUpDto getHome() {
 		return home;
 	}
@@ -65,5 +67,5 @@ public class MatchDto {
 	public void setMatchDate(LocalDate matchDate) {
 		this.matchDate = matchDate;
 	}
-	
+
 }

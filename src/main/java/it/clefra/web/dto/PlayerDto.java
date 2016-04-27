@@ -32,23 +32,25 @@ public abstract class PlayerDto <T extends PlayerDto<T>> implements Role{
 
 	public static List<PlayerDto> from(List<PlayerModel> playerModels) {
 		List<PlayerDto> playerDtos = new ArrayList<PlayerDto>();
-		for(PlayerModel playerModel : playerModels) {
-			PlayerDto playerDto = null;
-			switch(playerModel.getRoleType()) {
-			case GOALKEEPER:  
-				playerDto = GoalkeeperDto.from(playerModel);  
-				break;
-			case DEFENDER: 
-				playerDto = DefenderDto.from(playerModel);
-				break;
-			case MIDFIELDER:
-				playerDto = MidfielderDto.from(playerModel);
-			    break;
-			case FORWARD:
-				playerDto = ForwardDto.from(playerModel);
-			    break;
-			}	
-			playerDtos.add(playerDto);
+		if(playerModels != null){
+			for(PlayerModel playerModel : playerModels) {
+				PlayerDto playerDto = null;
+				switch(playerModel.getRoleType()) {
+				case GOALKEEPER:  
+					playerDto = GoalkeeperDto.from(playerModel);  
+					break;
+				case DEFENDER: 
+					playerDto = DefenderDto.from(playerModel);
+					break;
+				case MIDFIELDER:
+					playerDto = MidfielderDto.from(playerModel);
+					break;
+				case FORWARD:
+					playerDto = ForwardDto.from(playerModel);
+					break;
+				}	
+				playerDtos.add(playerDto);
+			}
 		}
 		return playerDtos;
 	}
