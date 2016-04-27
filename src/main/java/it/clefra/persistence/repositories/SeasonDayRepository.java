@@ -9,6 +9,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
 public interface SeasonDayRepository extends MongoRepository<SeasonDayModel, ObjectId>, SeasonDayCustomRepository  {
-	@Query("{seasonDay : $0}")
+	@Query("{'seasonDay' : ?0}")
 	public List<SeasonDayModel> findSeasonDaysByDay(Integer day);
 }

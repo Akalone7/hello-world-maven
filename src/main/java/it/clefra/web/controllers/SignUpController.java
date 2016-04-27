@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import it.clefra.persistence.model.CredentialsModel;
 import it.clefra.persistence.model.UserModel;
+import it.clefra.persistence.repositories.CredentialsRepository;
 import it.clefra.persistence.repositories.UsersRepository;
+import it.clefra.web.dto.CredentialsDto;
 import it.clefra.web.dto.UserDetailDto;
 
 @RepositoryRestController @RequestMapping (SignUpController.API_ROOT_URI)	
@@ -24,25 +27,66 @@ public class SignUpController {
 	@Autowired
     private UsersRepository usersRepository;
 	
+	@Autowired
+	private CredentialsRepository credentialRepository;
+	
 	@RequestMapping(value="/checkUsername/{username}", method = RequestMethod.GET)
 	public ResponseEntity<Boolean> get(@PathVariable String username) {
 		LOGGER.debug("Start getting user");
 
 		Boolean usernamePresent = usersRepository.findByUsername(username) != null;
-		ResponseEntity<Boolean> response = new  ResponseEntity<Boolean>(usernamePresent, HttpStatus.OK);
+		ResponseEntity<Boolean> response = new  ResponseEntity<>(usernamePresent, HttpStatus.OK);
 		LOGGER.debug("Request computed. Returning response to Client");
 		return response;
 	}
 	
+	/*	TODO
+	 *	Creare servizio per racchiudere le due repository.
+	 *	Servizio di mappatura per le credenziali (To e From).
+	 *	Gestire rollback manuale nel caso in cui uno dei due salvataggi dovesse fallire.
+	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<UserDetailDto> insert(@RequestBody UserDetailDto userDetailDto) {
+	public ResponseEntity<UserDetailDto> insert(@RequestBody SignUpDataRequest signUpDataRequest) {
 		LOGGER.debug("Start saving user");
 		UserModel savedUserModel = null;
-		if(userDetailDto != null) {
-			savedUserModel = usersRepository.insert(UserDetailDto.toUserModel(userDetailDto));
+		CredentialsModel credentialModel = new CredentialsModel();
+		if(signUpDataRequest != null) {
+			savedUserModel = usersRepository.insert(UserDetailDto.toUserModel(signUpDataRequest.getUserDetails()));
+			credentialModel.setUsername(signUpDataRequest.getCredentials().getUsername());
+			credentialModel.setPassword(signUpDataRequest.getCredentials().getPassword());
+			credentialRepository.insert(credentialModel);
 		}
 		ResponseEntity<UserDetailDto> response = new  ResponseEntity<>(UserDetailDto.from(savedUserModel), HttpStatus.OK);
 		LOGGER.debug("Request computed. Returning response to Client");
 		return response;
+	}
+	
+	public static class SignUpDataRequest {
+		private UserDetailDto userDetails;
+		private CredentialsDto credentials;
+		/**
+		 * @return the userDetails
+		 */
+		public UserDetailDto getUserDetails() {
+			return userDetails;
+		}
+		/**
+		 * @param userDetails the userDetails to set
+		 */
+		public void setUserDetails(UserDetailDto userDetails) {
+			this.userDetails = userDetails;
+		}
+		/**
+		 * @return the credentials
+		 */
+		public CredentialsDto getCredentials() {
+			return credentials;
+		}
+		/**
+		 * @param credentials the credentials to set
+		 */
+		public void setCredentials(CredentialsDto credentials) {
+			this.credentials = credentials;
+		}
 	}
 }
