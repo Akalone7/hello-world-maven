@@ -39,7 +39,7 @@
 <!-- 	<bean class="org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration" /> -->
 
 	<context:component-scan
-		base-package="it.clefra.web" />
+		base-package="it.clefra.web, it.clefra.service" />
 
 	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
 

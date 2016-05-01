@@ -1,11 +1,5 @@
 package it.clefra.web.controllers;
 
-import it.clefra.persistence.model.DummyModel;
-import it.clefra.persistence.model.SeasonDayModel;
-import it.clefra.persistence.repositories.SeasonDayRepository;
-import it.clefra.web.dto.DummyDto;
-import it.clefra.web.dto.SeasonDayDto;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import it.clefra.persistence.model.SeasonDayModel;
+import it.clefra.persistence.repositories.SeasonDayRepository;
+import it.clefra.web.dto.SeasonDayDto;
 
 @RestController @RequestMapping(SeasonDayController.API_ROOT_URI) 
 public class SeasonDayController {
@@ -75,15 +73,15 @@ public class SeasonDayController {
 	 */
 	 
 	@RequestMapping(value = "/{day}",method = RequestMethod.GET)
-	public ResponseEntity<List<SeasonDayDto>> getByDay(@PathVariable Integer day) {
+	public ResponseEntity<SeasonDayDto> getByDay(@PathVariable Integer day) {
 		LOGGER.debug("Start getting last seasonDay elements");
-		List<SeasonDayDto> output = new ArrayList<>();
+		SeasonDayDto output = new SeasonDayDto();
 		
-		List<SeasonDayModel> seasonDayModels = seasonDayRepository.findSeasonDaysByDay(day);
-		output = SeasonDayDto.from(seasonDayModels);
+		SeasonDayModel seasonDayModel = seasonDayRepository.findSeasonDaysByDay(day);
+		output = SeasonDayDto.from(seasonDayModel);
 
-		LOGGER.debug("{} season day found;", output.size());
-		ResponseEntity<List<SeasonDayDto>> response = new  ResponseEntity<List<SeasonDayDto>>(output, HttpStatus.OK);
+		LOGGER.debug("{} season day found;", seasonDayModel.getId());
+		ResponseEntity<SeasonDayDto> response = new  ResponseEntity<>(output, HttpStatus.OK);
 		LOGGER.debug("Request computed. Returning response to Client");
 		return response;
 	}

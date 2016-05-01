@@ -50,9 +50,13 @@ public class SignUpController {
 	public ResponseEntity<UserDetailDto> insert(@RequestBody SignUpDataRequest signUpDataRequest) {
 		LOGGER.debug("Start saving user");
 		UserDetailDto userDetailDto = null;
+		try{
 		Optional<UserDetailDto> optional = signUpService.register(signUpDataRequest);
 		if(optional.isPresent()) {
 			userDetailDto = optional.get();
+		}
+		} catch (final Exception e){
+			
 		}
 		ResponseEntity<UserDetailDto> response = new  ResponseEntity<>(userDetailDto, HttpStatus.OK);
 		LOGGER.debug("Request computed. Returning response to Client");

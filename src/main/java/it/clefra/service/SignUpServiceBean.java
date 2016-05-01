@@ -2,6 +2,7 @@ package it.clefra.service;
 
 import java.util.Optional;
 
+import org.owasp.esapi.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +25,20 @@ public class SignUpServiceBean implements SignUpService{
 	private CredentialsRepository credentialRepository;
 
 	@Override
-	public Optional<UserDetailDto> register(SignUpDataRequest signUpDataRequest) {
+	public Optional<UserDetailDto> register(SignUpDataRequest signUpDataRequest) throws Exception  {
 		UserModel savedUserModel = null;
-		if(signUpDataRequest != null) {
-			savedUserModel = usersRepository.insert(UserDetailDto.toUserModel(signUpDataRequest.getUserDetails()));
-			CredentialsModel credentialModel = CredentialsDto.toCredentialsModel(signUpDataRequest.getCredentials());
-			credentialRepository.insert(credentialModel);
+		try {
+			if(signUpDataRequest != null) {
+				savedUserModel = usersRepository.insert(UserDetailDto.toUserModel(signUpDataRequest.getUserDetails()));
+				CredentialsModel credentialModel = CredentialsDto.toCredentialsModel(signUpDataRequest.getCredentials());
+				credentialRepository.insert(credentialModel);
+			}
 		}
+		catch(Exception e)  {
+			usersRepository.delete(savedUserModel);
+			throw new Exception(); //TODO custom exception
+		}
+
 		return Optional.ofNullable(UserDetailDto.from(savedUserModel));
 	}
 
